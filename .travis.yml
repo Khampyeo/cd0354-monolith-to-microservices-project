@@ -30,9 +30,9 @@ deploy:
   provider: script
   script:
     # Push Docker images to DockerHub
-    - docker push $DOCKER_USERNAME/udagram-api-feed:v1
-    - docker push $DOCKER_USERNAME/udagram-api-user:v1
-    - docker push $DOCKER_USERNAME/udagram-frontend:v1
-    - docker push $DOCKER_USERNAME/udagram-reverseproxy:v1
+    docker push $DOCKER_USERNAME/udagram-api-feed:v1 || exit 1
+    docker push $DOCKER_USERNAME/udagram-api-user:v1 || exit 1
+    docker push $DOCKER_USERNAME/udagram-frontend:v1 || exit 1
+    docker push $DOCKER_USERNAME/udagram-reverseproxy:v1 || exit 1
   on:
     branch: main
