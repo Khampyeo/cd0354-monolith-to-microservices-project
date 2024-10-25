@@ -1,14 +1,14 @@
 language: ruby
 
 rvm:
-  - 2.7.0 # Upgrade Ruby to 2.7.0
+  - 3.1.0 # Upgrade Ruby to 3.1.0
 
 services:
   - docker
 
 before_install:
-  # Install dpl for deployment
-  - rvm use 2.7.0 --fuzzy do ruby -S gem install dpl -v 2.0.5.1
+  # Install dpl for deployment with compatible Ruby version
+  - rvm use 3.1.0 --fuzzy do ruby -S gem install dpl -v 2.0.5.1
   # DockerHub login
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
@@ -31,7 +31,4 @@ deploy:
     # Push Docker images to DockerHub
     - docker push $DOCKER_USERNAME/udagram-api-feed:v1
     - docker push $DOCKER_USERNAME/udagram-api-user:v1
-    - docker push $DOCKER_USERNAME/udagram-frontend:v1
-    - docker push $DOCKER_USERNAME/udagram-reverseproxy:v1
-  on:
-    branch: main
+    - docker push $DOCKER_USERNAME/udagram-frontend:v
