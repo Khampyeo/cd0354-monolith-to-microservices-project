@@ -1,13 +1,14 @@
-language: minimal
+language: ruby
+
+rvm:
+  - 2.7.0 # Upgrade Ruby to 2.7.0
 
 services:
   - docker
 
 before_install:
-  # Install compatible excon version for Ruby 2.4.5
-  - gem install excon -v 0.109.0
   # Install dpl for deployment
-  - rvm use $(travis_internal_ruby) --fuzzy do ruby -S gem install dpl -v 2.0.5.1
+  - rvm use 2.7.0 --fuzzy do ruby -S gem install dpl -v 2.0.5.1
   # DockerHub login
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
