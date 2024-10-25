@@ -9,8 +9,9 @@ services:
 before_install:
   # Install dpl for deployment with compatible Ruby version
   - rvm use 3.1.0 --fuzzy do ruby -S gem install dpl -v 2.0.5.1
-  # DockerHub login
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+
+  # DockerHub login check with exit condition
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin || exit 1
 
 script:
   # Build Docker images for each project
@@ -31,4 +32,7 @@ deploy:
     # Push Docker images to DockerHub
     - docker push $DOCKER_USERNAME/udagram-api-feed:v1
     - docker push $DOCKER_USERNAME/udagram-api-user:v1
-    - docker push $DOCKER_USERNAME/udagram-frontend:v
+    - docker push $DOCKER_USERNAME/udagram-frontend:v1
+    - docker push $DOCKER_USERNAME/udagram-reverseproxy:v1
+  on:
+    branch: main
