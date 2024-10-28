@@ -25,7 +25,7 @@ script:
   - docker tag udagram-api-user $DOCKER_USERNAME/udagram-api-user:v1
   # - docker tag udagram-frontend $DOCKER_USERNAME/udagram-frontend:v1
   # - docker tag udagram-reverseproxy $DOCKER_USERNAME/udagram-reverseproxy:v1
-
+  - docker images
 deploy:
   provider: script
   script:
