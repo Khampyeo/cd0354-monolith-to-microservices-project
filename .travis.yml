@@ -22,7 +22,7 @@ script:
 
   # Tag Docker images for DockerHub
   # - docker tag udagram-api-feed $DOCKER_USERNAME/udagram-api-feed:v1
-  - docker tag udagram-api-user $DOCKER_USERNAME/udagram-api-user:v1
+  - docker tag udagram-api-user chanhkiet/udagram-api-user:v1
   # - docker tag udagram-frontend $DOCKER_USERNAME/udagram-frontend:v1
   # - docker tag udagram-reverseproxy $DOCKER_USERNAME/udagram-reverseproxy:v1
   - docker images
@@ -30,7 +30,7 @@ deploy:
   provider: script
   script:
     echo "Pushing udagram-api-user..."
-    docker push $DOCKER_USERNAME/udagram-api-user:v1
+    docker push chanhkiet/udagram-api-user:v1
     # echo "Pushing udagram-api-feed..."
     # docker push $DOCKER_USERNAME/udagram-api-feed:v1
     # echo "Pushing udagram-frontend..."
