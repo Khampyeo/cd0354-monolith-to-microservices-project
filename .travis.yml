@@ -12,7 +12,7 @@ before_install:
 
   # DockerHub login check with exit condition
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin || exit 1
-
+  - docker info # Check Docker login status
 script:
   # Build Docker images for each project
   # - docker build -t udagram-api-feed ./udagram-api-feed
