@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-feed-deployment
+  labels:
+    service: backend-feed # Sửa thành 'service: backend-feed'
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      service: backend-feed # Sửa thành 'service: backend-feed'
+  template:
+    metadata:
+      labels:
+        service: backend-feed # Sửa thành 'service: backend-feed'
+    spec:
+      containers:
+        - name: backend-feed
+          image: chanhkiet/udagram-api-feed:v1
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: 250m
+            limits:
+              cpu: 500m
+          envFrom:
+            - secretRef:
+                name: env-secret
+            - configMapRef:
+                name: app-config
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: aws-credentials
+              mountPath: "/root/.aws/"
+              readOnly: true
+      volumes:
+        - name: aws-credentials
+          secret:
+            secretName: aws-credentials

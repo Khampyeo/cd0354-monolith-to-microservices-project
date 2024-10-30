@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-user-deployment
+  labels:
+    service: backend-user
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      service: backend-user
+  template:
+    metadata:
+      labels:
+        service: backend-user
+    spec:
+      containers:
+        - name: backend-user
+          image: chanhkiet/udagram-api-user:v1
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: 250m
+            limits:
+              cpu: 500m
+          envFrom:
+            - secretRef:
+                name: env-secret
+            - secretRef:
+                name: aws-credentials
+            - configMapRef:
+                name: app-config
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: aws-credentials
+              mountPath: "/root/.aws/"
+              readOnly: true
+      volumes:
+        - name: aws-credentials
+          secret:
+            secretName: aws-credentials
+      restartPolicy: Always

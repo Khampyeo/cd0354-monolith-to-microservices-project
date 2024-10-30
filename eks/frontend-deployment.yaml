@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deployment
+  labels:
+    app: frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: chanhkiet/udagram-frontend:v1
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          env:
+            - name: URL
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: URL
+          resources:
+            requests:
+              cpu: 500m
+            limits:
+              cpu: 1000m
